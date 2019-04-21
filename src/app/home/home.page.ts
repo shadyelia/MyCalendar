@@ -1,246 +1,134 @@
-import { Component } from '@angular/core';
-import { NavController, AlertController } from '@ionic/angular';
-//import { AddEventPage } from '../add-event/add-event';
-//import { EditEventPage } from '../edit-event/edit-event';
-import { Calendar } from '@ionic-native/calendar/ngx';
+import { CalendarComponent } from 'ionic2-calendar/calendar';
+import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { formatDate } from '@angular/common';
 
 @Component({
 	selector: 'app-home',
 	templateUrl: 'home.page.html',
 	styleUrls: ['home.page.scss']
 })
-export class HomePage {
-	date: any;
-	daysInThisMonth: any;
-	daysInLastMonth: any;
-	daysInNextMonth: any;
-	monthNames: string[];
-	currentMonth: any;
-	currentYear: any;
-	currentDate: any;
-	eventList: any;
-	selectedEvent: any;
-	isSelected: any;
+export class HomePage implements OnInit {
+	event = {
+		title: '',
+		desc: '',
+		startTime: '',
+		endTime: '',
+		allDay: false
+	};
+
+	minDate = new Date().toISOString();
+
+	eventSource = [];
+	viewTitle;
+
+	calendar = {
+		mode: 'month',
+		currentDate: new Date()
+	};
+
+	@ViewChild(CalendarComponent) myCal: CalendarComponent;
 
 	constructor(
 		private alertCtrl: AlertController,
-		public navCtrl: NavController,
-		private calendar: Calendar
+		@Inject(LOCALE_ID) private locale: string
 	) {}
 
-	ionViewWillEnter() {
-		this.date = new Date();
-		this.monthNames = [
-			'January',
-			'February',
-			'March',
-			'April',
-			'May',
-			'June',
-			'July',
-			'August',
-			'September',
-			'October',
-			'November',
-			'December'
-		];
-		this.getDaysOfMonth();
-		this.loadEventThisMonth();
+	ngOnInit() {
+		this.resetEvent();
 	}
 
-	getDaysOfMonth() {
-		this.daysInThisMonth = new Array();
-		this.daysInLastMonth = new Array();
-		this.daysInNextMonth = new Array();
-		this.currentMonth = this.monthNames[this.date.getMonth()];
-		this.currentYear = this.date.getFullYear();
-		if (this.date.getMonth() === new Date().getMonth()) {
-			this.currentDate = new Date().getDate();
-		} else {
-			this.currentDate = 999;
-		}
-
-		var firstDayThisMonth = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth(),
-			1
-		).getDay();
-		var prevNumOfDays = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth(),
-			0
-		).getDate();
-		for (
-			var i = prevNumOfDays - (firstDayThisMonth - 1);
-			i <= prevNumOfDays;
-			i++
-		) {
-			this.daysInLastMonth.push(i);
-		}
-
-		var thisNumOfDays = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth() + 1,
-			0
-		).getDate();
-		for (var j = 0; j < thisNumOfDays; j++) {
-			this.daysInThisMonth.push(j + 1);
-		}
-
-		var lastDayThisMonth = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth() + 1,
-			0
-		).getDay();
-		// var nextNumOfDays = new Date(this.date.getFullYear(), this.date.getMonth()+2, 0).getDate();
-		for (var k = 0; k < 6 - lastDayThisMonth; k++) {
-			this.daysInNextMonth.push(k + 1);
-		}
-		var totalDays =
-			this.daysInLastMonth.length +
-			this.daysInThisMonth.length +
-			this.daysInNextMonth.length;
-		if (totalDays < 36) {
-			for (
-				var l = 7 - lastDayThisMonth;
-				l < 7 - lastDayThisMonth + 7;
-				l++
-			) {
-				this.daysInNextMonth.push(l);
-			}
-		}
+	resetEvent() {
+		this.event = {
+			title: '',
+			desc: '',
+			startTime: new Date().toISOString(),
+			endTime: new Date().toISOString(),
+			allDay: false
+		};
 	}
 
-	goToLastMonth() {
-		this.date = new Date(this.date.getFullYear(), this.date.getMonth(), 0);
-		this.getDaysOfMonth();
-	}
-
-	goToNextMonth() {
-		this.date = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth() + 2,
-			0
-		);
-		this.getDaysOfMonth();
-	}
-
+	// Create the right event format and reload source
 	addEvent() {
-		//this.navCtrl.push(AddEventPage);
+		let eventCopy = {
+			title: this.event.title,
+			startTime: new Date(this.event.startTime),
+			endTime: new Date(this.event.endTime),
+			allDay: this.event.allDay,
+			desc: this.event.desc
+		};
+
+		if (eventCopy.allDay) {
+			let start = eventCopy.startTime;
+			let end = eventCopy.endTime;
+
+			eventCopy.startTime = new Date(
+				Date.UTC(
+					start.getUTCFullYear(),
+					start.getUTCMonth(),
+					start.getUTCDate()
+				)
+			);
+			eventCopy.endTime = new Date(
+				Date.UTC(
+					end.getUTCFullYear(),
+					end.getUTCMonth(),
+					end.getUTCDate() + 1
+				)
+			);
+		}
+
+		this.eventSource.push(eventCopy);
+		this.myCal.loadEvents();
+		this.resetEvent();
 	}
 
-	loadEventThisMonth() {
-		this.eventList = new Array();
-		var startDate = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth(),
-			1
-		);
-		var endDate = new Date(
-			this.date.getFullYear(),
-			this.date.getMonth() + 1,
-			0
-		);
-		this.calendar.listEventsInRange(startDate, endDate).then(
-			msg => {
-				msg.forEach(item => {
-					this.eventList.push(item);
-				});
-			},
-			err => {
-				console.log(err);
-			}
-		);
+	// Change current month/week/day
+	next() {
+		var swiper = document.querySelector('.swiper-container')['swiper'];
+		swiper.slideNext();
 	}
 
-	checkEvent(day) {
-		var hasEvent = false;
-		var thisDate1 =
-			this.date.getFullYear() +
-			'-' +
-			(this.date.getMonth() + 1) +
-			'-' +
-			day +
-			' 00:00:00';
-		var thisDate2 =
-			this.date.getFullYear() +
-			'-' +
-			(this.date.getMonth() + 1) +
-			'-' +
-			day +
-			' 23:59:59';
-		this.eventList.forEach(event => {
-			if (
-				(event.startDate >= thisDate1 &&
-					event.startDate <= thisDate2) ||
-				(event.endDate >= thisDate1 && event.endDate <= thisDate2)
-			) {
-				hasEvent = true;
-			}
+	back() {
+		var swiper = document.querySelector('.swiper-container')['swiper'];
+		swiper.slidePrev();
+	}
+
+	// Change between month/week/day
+	changeMode(mode) {
+		this.calendar.mode = mode;
+	}
+
+	// Focus today
+	today() {
+		this.calendar.currentDate = new Date();
+	}
+
+	// Selected date reange and hence title changed
+	onViewTitleChanged(title) {
+		this.viewTitle = title;
+	}
+
+	// Calendar event was clicked
+	async onEventSelected(event) {
+		// Use Angular date pipe for conversion
+		let start = formatDate(event.startTime, 'medium', this.locale);
+		let end = formatDate(event.endTime, 'medium', this.locale);
+
+		const alert = await this.alertCtrl.create({
+			header: event.title,
+			subHeader: event.desc,
+			message: 'From: ' + start + '<br><br>To: ' + end,
+			buttons: ['OK']
 		});
-		return hasEvent;
+		alert.present();
 	}
 
-	selectDate(day) {
-		this.isSelected = false;
-		this.selectedEvent = new Array();
-		var thisDate1 =
-			this.date.getFullYear() +
-			'-' +
-			(this.date.getMonth() + 1) +
-			'-' +
-			day +
-			' 00:00:00';
-		var thisDate2 =
-			this.date.getFullYear() +
-			'-' +
-			(this.date.getMonth() + 1) +
-			'-' +
-			day +
-			' 23:59:59';
-		this.eventList.forEach(event => {
-			if (
-				(event.startDate >= thisDate1 &&
-					event.startDate <= thisDate2) ||
-				(event.endDate >= thisDate1 && event.endDate <= thisDate2)
-			) {
-				this.isSelected = true;
-				this.selectedEvent.push(event);
-			}
-		});
-	}
-
-	deleteEvent(evt) {
-		console.log(new Date(evt.startDate.replace(/\s/, 'T')));
-		console.log(new Date(evt.endDate.replace(/\s/, 'T')));
-		/* let alert = this.alertCtrl.create({
-      title: 'Confirm Delete',
-      message: 'Are you sure want to delete this event?',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Ok',
-          handler: () => {
-            this.calendar.deleteEvent(evt.title, evt.location, evt.notes, new Date(evt.startDate.replace(/\s/, 'T')), new Date(evt.endDate.replace(/\s/, 'T'))).then(
-              (msg) => {
-                console.log(msg);
-                this.loadEventThisMonth();
-                this.selectDate(new Date(evt.startDate.replace(/\s/, 'T')).getDate());
-              },
-              (err) => {
-                console.log(err);
-              }
-            )
-          }
-        }
-      ]
-    });
-	alert.present();*/
+	// Time slot was clicked
+	onTimeSelected(ev) {
+		let selected = new Date(ev.selectedTime);
+		this.event.startTime = selected.toISOString();
+		selected.setHours(selected.getHours() + 1);
+		this.event.endTime = selected.toISOString();
 	}
 }

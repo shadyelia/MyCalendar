@@ -14,10 +14,20 @@ import localeArEG from '@angular/common/locales/ar-EG';
 import localeArEGExtra from '@angular/common/locales/extra/ar-EG';
 
 registerLocaleData(localeArEG, localeArEGExtra);
+
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { environment } from '../environments/environment';
+
 @NgModule({
 	declarations: [AppComponent],
 	entryComponents: [],
-	imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+	imports: [
+		BrowserModule,
+		IonicModule.forRoot(),
+		AppRoutingModule,
+		AngularFireModule.initializeApp(environment.firebaseConfig)
+	],
 	providers: [
 		StatusBar,
 		SplashScreen,

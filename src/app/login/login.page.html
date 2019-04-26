@@ -1,0 +1,124 @@
+<ion-header>
+	<ion-toolbar color="medium">
+		<ion-title text-center>
+			الدخول
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="backgroundColor" padding-bottom>
+	<!-- button to switch lang -->
+	<!-- <div class="lang-link" text-right>
+    <span (click)="changeLanguage()">{{"LANGUAGE_BTN"|translate}}</span>
+  </div> -->
+	<ion-img class=" logo imgWidth" src="assets/imgs/logoFinal.png"></ion-img>
+	<!-- start login overlay -->
+	<div class="login-overlay">
+		<div class="login-info" padding>
+			<!-- <img src="assets/imgs/logo.png" /> -->
+
+			<h1 text-center>
+				برنامج الاعترفات
+			</h1>
+			<h4></h4>
+		</div>
+	</div>
+	<!-- end login overlay -->
+
+	<!-- start Login form -->
+	<form padding-bottom [formGroup]="loginForm">
+		<ion-grid padding>
+			<!-- start email filed and error message -->
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="mail"></ion-icon>
+						<ion-label floating>البريد الالكترونى</ion-label>
+						<ion-input
+							matInput
+							type="email"
+							formControlName="email"
+						></ion-input>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							loginForm.get('email').hasError('email') &&
+							!loginForm.get('email').hasError('required')
+						"
+					>
+						البريد الالكترونى غير صحيح
+					</div>
+					<div
+						class="error-message"
+						*ngIf="
+							loginForm.get('email').hasError('required') &&
+							(loginForm.get('email').touched || showValid)
+						"
+					>
+						البريد الاكلترونى مطلوب
+					</div>
+				</ion-col>
+			</ion-row>
+			<!-- end email filed and error message -->
+
+			<!-- start password filed and error message -->
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="lock"></ion-icon>
+						<ion-label floating>كلمة سر</ion-label>
+						<ion-input
+							matInput
+							type="{{ passwordType }}"
+							formControlName="password"
+							clearOnEdit="false"
+						></ion-input>
+						<ion-icon
+							tappable
+							item-end
+							name="eye"
+							*ngIf="!showPassword"
+							(click)="handelShowPassword()"
+						></ion-icon>
+						<ion-icon
+							tappable
+							item-end
+							name="eye-off"
+							*ngIf="showPassword"
+							(click)="handelShowPassword()"
+						></ion-icon>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							loginForm.get('password').hasError('required') &&
+							(loginForm.get('password').touched || showValid)
+						"
+					>
+						كلمة السر مطلوبة
+					</div>
+				</ion-col>
+			</ion-row>
+			<!-- end password filed and error message -->
+		</ion-grid>
+	</form>
+	<!-- end login Page -->
+
+	<!-- start login other pages links  -->
+	<div text-center class="link-line">
+		<a tappable (click)="signUp()">لا تملك حساب</a>
+	</div>
+	<!-- end login other pages links -->
+</ion-content>
+
+<!-- actions button  -->
+<ion-footer>
+	<ion-button
+		expand="block"
+		color="medium"
+		(click)="login()"
+		[disabled]="!loginForm.valid"
+		>الدخول</ion-button
+	>
+</ion-footer>

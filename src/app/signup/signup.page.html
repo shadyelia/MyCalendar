@@ -1,0 +1,185 @@
+<ion-header>
+	<ion-nav dir="rtl"></ion-nav>
+	<ion-toolbar color="medium">
+		<ion-title text-center>
+			التسجيل
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content class="backgroundColor">
+	<form [formGroup]="registrationFrom">
+		<!-- 
+        *** IMPORTANT ***
+        - change commented error message based on every filed 
+        - i don't create form filed in controller
+        - Don't forget delete this message after finish validate the form
+      -->
+
+		<ion-grid padding>
+			<!-- start email filed and error message -->
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="mail"></ion-icon>
+						<ion-label floating>البريد الالكترونى *</ion-label>
+						<ion-input
+							matInput
+							type="email"
+							formControlName="email"
+						></ion-input>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('email').hasError('email') &&
+							!registrationFrom.get('email').hasError('required')
+						"
+					>
+						بريد الكترونى غير صالح
+					</div>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom
+								.get('email')
+								.hasError('required') &&
+							(registrationFrom.get('email').touched || showValid)
+						"
+					>
+						مطلوب البريد الالكترونى
+					</div>
+				</ion-col>
+			</ion-row>
+			<!-- end email filed and error message -->
+
+			<!-- start password filed and error message -->
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="lock"></ion-icon>
+						<ion-label floating>كلمة السر *</ion-label>
+						<ion-input
+							matInput
+							[type]="showPassword ? 'text' : 'password'"
+							formControlName="password"
+							clearOnEdit="false"
+							validateEqualTo="confirmPassword"
+						></ion-input>
+						<ion-icon
+							tappable
+							item-end
+							name="eye"
+							*ngIf="!showPassword"
+							(click)="handelShowPassword()"
+						></ion-icon>
+						<ion-icon
+							tappable
+							item-end
+							name="eye-off"
+							*ngIf="showPassword"
+							(click)="handelShowPassword()"
+						></ion-icon>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom
+								.get('password')
+								.hasError('required') &&
+							(registrationFrom.get('password').touched ||
+								showValid)
+						"
+					>
+						مطلوب كلمة السر
+					</div>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('password').touched &&
+							registrationFrom.get('password').hasError('pattern')
+						"
+					>
+						كلمة السر غير قوية
+					</div>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('confirmPassword').value !==
+								registrationFrom.get('password').value &&
+							registrationFrom.get('confirmPassword').touched &&
+							registrationFrom.get('confirmPassword').value !=
+								'' &&
+							!isValid
+						"
+					></div>
+				</ion-col>
+			</ion-row>
+			<!-- end password filed and error message -->
+
+			<!-- start confirm password filed and error message -->
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="lock"></ion-icon>
+						<ion-label floating>تاكيد كلمة السر *</ion-label>
+						<ion-input
+							matInput
+							[type]="showConfirmPassword ? 'text' : 'password'"
+							formControlName="confirmPassword"
+							clearOnEdit="false"
+							validateEqualTo="confirmPassword"
+						></ion-input>
+						<ion-icon
+							tappable
+							item-end
+							name="eye"
+							*ngIf="!showConfirmPassword"
+							(click)="handelConfirmShowPassword()"
+						>
+						</ion-icon>
+						<ion-icon
+							tappable
+							item-end
+							name="eye-off"
+							*ngIf="showConfirmPassword"
+							(click)="handelConfirmShowPassword()"
+						></ion-icon>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom
+								.get('confirmPassword')
+								.hasError('required') &&
+							registrationFrom.get('confirmPassword').touched
+						"
+					>
+						مطلوب تاكيد كلمة السر
+					</div>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('confirmPassword').value !==
+								registrationFrom.get('password').value &&
+							registrationFrom.get('confirmPassword').touched &&
+							registrationFrom.get('confirmPassword').value !=
+								'' &&
+							!isValid
+						"
+					>
+						غير مطابقة لكلمة السر
+					</div>
+				</ion-col>
+			</ion-row>
+			<!-- end confirm password filed and error message -->
+		</ion-grid>
+	</form>
+</ion-content>
+
+<!-- actions button  -->
+<ion-footer>
+	<ion-button expand="block" color="medium" (click)="signUp()"
+		>التسجيل</ion-button
+	>
+</ion-footer>

@@ -31,7 +31,8 @@ import { environment } from '../environments/environment';
 	providers: [
 		StatusBar,
 		SplashScreen,
-		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+		AngularFireAuth
 	],
 	bootstrap: [AppComponent]
 })

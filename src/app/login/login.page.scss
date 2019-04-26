@@ -1,78 +1,33 @@
-page-login {
-	$login-title-color: #f7f6f4;
+/* start form Login Links */
+.link-line {
+	padding-bottom: 16px;
 
-	.backgroundColor {
-		background-color: whitesmoke;
-	}
-
-	/* start Login overlay  */
-	.logo {
+	a {
 		position: relative;
-		height: 80px;
-		width: 180px;
-	}
-	.imgWidth {
-		max-width: 349px;
-	}
-	.login-overlay {
-		position: relative;
-		height: 225px;
-
-		.login-info {
+		text-decoration: none;
+		font-size: 16px;
+		font-weight: 200;
+		color: #b99867;
+		&:after {
+			content: '';
+			display: block;
 			position: absolute;
-			width: 100%;
-
-			img {
-				display: block;
-				max-width: 343px;
-			}
-
-			h1 {
-				font-size: 48px;
-				font-weight: bold;
-				color: $login-title-color;
-			}
-
-			h4 {
-				font-size: 48px;
-				font-weight: 200;
-				color: $login-title-color;
-			}
+			left: -3px;
+			bottom: 0;
+			width: calc(100% + 6px);
+			height: 1px;
+			background-color: #b99867;
 		}
+		text-transform: capitalize;
 	}
-	/* end Login overlay  */
+}
+/* start form Login Links */
 
-	/* start form Login Links */
-	.link-line {
-		padding-bottom: 16px;
-
-		a {
-			position: relative;
-			text-decoration: none;
-			font-size: 16px;
-			font-weight: 200;
-			color: #b99867;
-			&:after {
-				content: '';
-				display: block;
-				position: absolute;
-				left: -3px;
-				bottom: 0;
-				width: calc(100% + 6px);
-				height: 1px;
-				background-color: #b99867;
-			}
-			text-transform: capitalize;
-		}
-	}
-	/* start form Login Links */
-
-	.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus)
-		.item-inner,
-	.item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus)
-		.item-inner {
-		border-bottom-color: #c8c7cc !important;
-		-webkit-box-shadow: 0 !important;
-		box-shadow: 0 !important;
-	}
+.item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus)
+	.item-inner,
+.item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus)
+	.item-inner {
+	border-bottom-color: #c8c7cc !important;
+	-webkit-box-shadow: 0 !important;
+	box-shadow: 0 !important;
 }

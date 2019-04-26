@@ -14,6 +14,7 @@ import { AuthService } from '../../services/auth.service';
 	styleUrls: ['./signup.page.scss']
 })
 export class SignupPage {
+	showValid: boolean = false;
 	signupError: string;
 	registrationFrom: FormGroup;
 	showPassword: boolean;

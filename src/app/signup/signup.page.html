@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content class="backgroundColor">
-	<form [formGroup]="registrationFrom">
+	<form padding-bottom [formGroup]="registrationFrom" dir="rtl">
 		<!-- 
         *** IMPORTANT ***
         - change commented error message based on every filed 
@@ -27,6 +27,7 @@
 							matInput
 							type="email"
 							formControlName="email"
+							class="inputColor"
 						></ion-input>
 					</ion-item>
 					<div
@@ -65,6 +66,7 @@
 							formControlName="password"
 							clearOnEdit="false"
 							validateEqualTo="confirmPassword"
+							class="inputColor"
 						></ion-input>
 						<ion-icon
 							tappable
@@ -110,7 +112,7 @@
 							registrationFrom.get('confirmPassword').touched &&
 							registrationFrom.get('confirmPassword').value !=
 								'' &&
-							!isValid
+							!showValid
 						"
 					></div>
 				</ion-col>
@@ -129,6 +131,7 @@
 							formControlName="confirmPassword"
 							clearOnEdit="false"
 							validateEqualTo="confirmPassword"
+							class="inputColor"
 						></ion-input>
 						<ion-icon
 							tappable
@@ -165,7 +168,7 @@
 							registrationFrom.get('confirmPassword').touched &&
 							registrationFrom.get('confirmPassword').value !=
 								'' &&
-							!isValid
+							!showValid
 						"
 					>
 						غير مطابقة لكلمة السر

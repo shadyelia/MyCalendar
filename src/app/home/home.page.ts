@@ -9,6 +9,7 @@ import { formatDate } from '@angular/common';
 	styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
+	collapseCard: boolean = false;
 	event = {
 		title: '',
 		desc: '',

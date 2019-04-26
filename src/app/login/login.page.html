@@ -6,17 +6,12 @@
 	</ion-toolbar>
 </ion-header>
 
-<ion-content class="backgroundColor" padding-bottom>
-	<!-- button to switch lang -->
-	<!-- <div class="lang-link" text-right>
-    <span (click)="changeLanguage()">{{"LANGUAGE_BTN"|translate}}</span>
-  </div> -->
-	<ion-img class=" logo imgWidth" src="assets/imgs/logoFinal.png"></ion-img>
+<ion-content padding-bottom>
+	<ion-img src="assets/imgs/logoFinal.png"></ion-img>
 	<!-- start login overlay -->
 	<div class="login-overlay">
 		<div class="login-info" padding>
 			<!-- <img src="assets/imgs/logo.png" /> -->
-
 			<h1 text-center>
 				برنامج الاعترفات
 			</h1>
@@ -26,7 +21,7 @@
 	<!-- end login overlay -->
 
 	<!-- start Login form -->
-	<form padding-bottom [formGroup]="loginForm">
+	<form padding-bottom [formGroup]="loginForm" dir="rtl">
 		<ion-grid padding>
 			<!-- start email filed and error message -->
 			<ion-row>
@@ -38,6 +33,7 @@
 							matInput
 							type="email"
 							formControlName="email"
+							class="inputColor"
 						></ion-input>
 					</ion-item>
 					<div
@@ -73,6 +69,7 @@
 							type="{{ passwordType }}"
 							formControlName="password"
 							clearOnEdit="false"
+							class="inputColor"
 						></ion-input>
 						<ion-icon
 							tappable

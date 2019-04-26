@@ -5,7 +5,7 @@ import {
 	Validators,
 	FormControl
 } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -23,7 +23,8 @@ export class LoginPage {
 	constructor(
 		private navCtrl: NavController,
 		private auth: AuthService,
-		fb: FormBuilder
+		fb: FormBuilder,
+		private alertCtrl: AlertController
 	) {
 		this.loginForm = new FormGroup({
 			email: new FormControl(
@@ -38,7 +39,7 @@ export class LoginPage {
 		this.passwordType = 'password';
 	}
 
-	login() {
+	async login() {
 		if (this.loginForm.valid) {
 			let data = this.loginForm.value;
 
@@ -52,12 +53,14 @@ export class LoginPage {
 			};
 			this.auth
 				.signInWithEmail(credentials)
-				.then(
-					() => this.navCtrl.navigateRoot('home'),
-					error => (this.loginError = error.message)
-				);
+				.then(() => this.navCtrl.navigateRoot('home'), error => {});
 		} else {
-			this.showValid = true;
+			const alert = await this.alertCtrl.create({
+				header: 'خطأ',
+				message: 'كلمة المرور او البريد الالكترونى غير صحيح',
+				buttons: ['اغلاق']
+			});
+			alert.present();
 		}
 	}
 

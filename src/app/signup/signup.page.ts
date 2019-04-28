@@ -5,7 +5,7 @@ import {
 	Validators,
 	FormControl
 } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController, MenuController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -25,7 +25,9 @@ export class SignupPage {
 	constructor(
 		fb: FormBuilder,
 		private navCtrl: NavController,
-		private auth: AuthService
+		private auth: AuthService,
+		public menu: MenuController,
+		private alertCtrl: AlertController
 	) {
 		this.registrationFrom = new FormGroup({
 			email: new FormControl(
@@ -59,18 +61,30 @@ export class SignupPage {
 		this.confirmPasswordType = 'password';
 	}
 
+	ionViewDidEnter() {
+		this.menu.enable(false);
+	}
+	ionViewWillLeave() {
+		this.menu.enable(true);
+	}
+
 	signUp() {
 		let data = this.registrationFrom.value;
 		let credentials = {
 			email: data.email,
 			password: data.password
 		};
-		this.auth
-			.signUp(credentials)
-			.then(
-				() => this.navCtrl.navigateRoot('home'),
-				error => (this.signupError = error.message)
-			);
+		this.auth.signUp(credentials).then(
+			() => this.navCtrl.navigateRoot('home'),
+			async error => {
+				const alert = await this.alertCtrl.create({
+					header: 'خطأ',
+					message: 'البريد الالكترونى متكرر',
+					buttons: ['اغلاق']
+				});
+				alert.present();
+			}
+		);
 	}
 
 	handelShowPassword() {

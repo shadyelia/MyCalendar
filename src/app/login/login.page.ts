@@ -5,7 +5,7 @@ import {
 	Validators,
 	FormControl
 } from '@angular/forms';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, MenuController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -24,7 +24,8 @@ export class LoginPage {
 		private navCtrl: NavController,
 		private auth: AuthService,
 		fb: FormBuilder,
-		private alertCtrl: AlertController
+		private alertCtrl: AlertController,
+		public menu: MenuController
 	) {
 		this.loginForm = new FormGroup({
 			email: new FormControl(
@@ -39,7 +40,14 @@ export class LoginPage {
 		this.passwordType = 'password';
 	}
 
-	async login() {
+	ionViewDidEnter() {
+		this.menu.enable(false);
+	}
+	ionViewWillLeave() {
+		this.menu.enable(true);
+	}
+
+	login() {
 		if (this.loginForm.valid) {
 			let data = this.loginForm.value;
 
@@ -51,16 +59,17 @@ export class LoginPage {
 				email: data.email,
 				password: data.password
 			};
-			this.auth
-				.signInWithEmail(credentials)
-				.then(() => this.navCtrl.navigateRoot('home'), error => {});
-		} else {
-			const alert = await this.alertCtrl.create({
-				header: 'خطأ',
-				message: 'كلمة المرور او البريد الالكترونى غير صحيح',
-				buttons: ['اغلاق']
-			});
-			alert.present();
+			this.auth.signInWithEmail(credentials).then(
+				() => this.navCtrl.navigateRoot('home'),
+				async error => {
+					const alert = await this.alertCtrl.create({
+						header: 'خطأ',
+						message: 'كلمة المرور او البريد الالكترونى غير صحيح',
+						buttons: ['اغلاق']
+					});
+					alert.present();
+				}
+			);
 		}
 	}
 

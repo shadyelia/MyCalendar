@@ -2,6 +2,7 @@
 // http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
+
 :root {
 	.inputColor {
 		background-color: aliceblue;
@@ -87,4 +88,34 @@
 	--ion-color-light-contrast-rgb: 0, 0, 0;
 	--ion-color-light-shade: #d7d8da;
 	--ion-color-light-tint: #f5f6f9;
+}
+
+$app-direction: rtl;
+
+.bigFont {
+	font-size: -webkit-xxx-large;
+}
+
+.label {
+	margin: auto;
+	display: flex;
+	align-items: center;
+}
+ion-icon {
+	line-height: 1;
+}
+
+ion-menu {
+	--ion-background-color: #00d2ff;
+	--ion-text-color: var(--ion-color-primary-contrast);
+	--ion-background: -webkit-linear-gradient(to left, #3a7bd5, #00d2ff);
+
+	ion-toolbar {
+		--background: var(--ion-color-primary);
+	}
+
+	ion-list {
+		/* optional, but it needs when you use gradient as a background color.*/
+		background: transparent;
+	}
 }

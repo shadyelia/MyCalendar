@@ -28,6 +28,11 @@ export class AppComponent implements OnInit {
 	ngOnInit() {
 		this.pages = [
 			{
+				title: 'الصفحة الرئيسة',
+				component: 'home',
+				icon: 'home'
+			},
+			{
 				title: 'اضافة شخص',
 				component: 'addperson',
 				icon: 'person-add'

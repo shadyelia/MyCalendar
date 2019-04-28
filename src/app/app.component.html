@@ -1,21 +1,20 @@
 <ion-app>
-	<ion-menu contentId="content" side="end">
+	<ion-menu dir="rtl" contentId="content" side="end" type="push" id="Menu">
 		<ion-header>
-			<ion-toolbar> <ion-title>Menu</ion-title> </ion-toolbar>
+			<ion-toolbar>
+				<ion-title class="bigFont">القائمة</ion-title>
+			</ion-toolbar>
 		</ion-header>
 		<ion-content>
-			<ion-list class="menu-links">
+			<ion-list no-lines>
 				<ion-item
 					menuClose
-					color="third"
 					ion-button
-					full
-					icon-start
 					*ngFor="let p of pages"
 					(click)="openPage(p)"
 				>
 					<ion-icon name="{{ p.icon }}"></ion-icon>
-					{{ p.title }}
+					<h1 class="label">{{ p.title }}</h1>
 				</ion-item>
 			</ion-list>
 		</ion-content>

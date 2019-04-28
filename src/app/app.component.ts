@@ -1,26 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html'
+	selector: 'app-root',
+	templateUrl: 'app.component.html'
 })
-export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
-  }
+export class AppComponent implements OnInit {
+	pages: Array<{ title: string; component: string; icon: string }>;
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
+	constructor(
+		private platform: Platform,
+		private splashScreen: SplashScreen,
+		private statusBar: StatusBar
+	) {
+		this.initializeApp();
+	}
+	initializeApp() {
+		this.platform.ready().then(() => {
+			this.statusBar.styleDefault();
+			this.splashScreen.hide();
+		});
+	}
+
+	ngOnInit() {
+		this.pages = [
+			{
+				title: 'اضافة شخص',
+				component: 'addperson',
+				icon: 'person-add'
+			},
+			{
+				title: 'الخروج',
+				component: 'addperson',
+				icon: 'log-out'
+			}
+		];
+	}
+
+	openPage(page) {
+		console.log(page);
+	}
 }

@@ -1,17 +1,22 @@
 <ion-header>
-	<ion-toolbar color="primary">
-		<ion-title>
-			{{ viewTitle }}
-		</ion-title>
-		<ion-buttons slot="end">
-			<ion-button (click)="today()">Today</ion-button>
-		</ion-buttons>
+	<ion-toolbar color="medium">
+		<ion-row dir="rtl">
+			<ion-col size="2">
+				<ion-menu-button autoHide="true"></ion-menu-button>
+			</ion-col>
+			<ion-col size="10">
+				<ion-title text-center>
+					الصفحة الرئيسية
+				</ion-title>
+			</ion-col>
+		</ion-row>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
 	<!-- Card for adding a new event -->
-	<ion-card>
+
+	<!-- <ion-card>
 		<ion-card-header tappable (click)="collapseCard = !collapseCard">
 			<ion-card-title>New Event</ion-card-title>
 		</ion-card-header>
@@ -60,44 +65,56 @@
 				>Add Event</ion-button
 			>
 		</ion-card-content>
-	</ion-card>
+	</ion-card> -->
 
 	<ion-row>
 		<!-- Change the displayed calendar mode -->
 		<ion-col size="4">
 			<ion-button
+				class="bigFont"
 				expand="block"
 				[color]="calendar.mode == 'month' ? 'primary' : 'secondary'"
 				(click)="changeMode('month')"
-				>Month</ion-button
+				>شهر</ion-button
 			>
 		</ion-col>
 		<ion-col size="4">
 			<ion-button
+				class="bigFont"
 				expand="block"
 				[color]="calendar.mode == 'week' ? 'primary' : 'secondary'"
 				(click)="changeMode('week')"
-				>Week</ion-button
+				>اسبوع</ion-button
 			>
 		</ion-col>
 		<ion-col size="4">
 			<ion-button
+				class="bigFont"
 				expand="block"
 				[color]="calendar.mode == 'day' ? 'primary' : 'secondary'"
 				(click)="changeMode('day')"
-				>Day</ion-button
+				>يوم</ion-button
 			>
 		</ion-col>
 
 		<!-- Move back one screen of the slides -->
-		<ion-col size="6" text-left>
+		<ion-col size="3" text-left>
 			<ion-button fill="clear" (click)="back()">
 				<ion-icon name="arrow-back" slot="icon-only"></ion-icon>
 			</ion-button>
 		</ion-col>
 
+		<ion-col size="6" text-center dir="rtl">
+			<ion-label class="bigFont">
+				{{ viewTitle }}
+			</ion-label>
+			<ion-button fill="clear" (click)="today()">
+				<ion-icon name="today" slot="icon-only"></ion-icon>
+			</ion-button>
+		</ion-col>
+
 		<!-- Move forward one screen of the slides -->
-		<ion-col size="6" text-right>
+		<ion-col size="3" text-right>
 			<ion-button fill="clear" (click)="next()">
 				<ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
 			</ion-button>

@@ -24,6 +24,7 @@ export class SignupPage {
 		private alertCtrl: AlertController
 	) {
 		this.registrationFrom = new FormGroup({
+			name: new FormControl('', Validators.required),
 			email: new FormControl(
 				'',
 				Validators.compose([Validators.required, Validators.email])
@@ -65,6 +66,7 @@ export class SignupPage {
 	signUp() {
 		let data = this.registrationFrom.value;
 		let credentials = {
+			displayName: data.name,
 			email: data.email,
 			password: data.password
 		};

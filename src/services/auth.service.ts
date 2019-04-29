@@ -38,6 +38,10 @@ export class AuthService {
 		return this.user && this.user.email;
 	}
 
+	getUserId() {
+		return this.user && this.user.uid;
+	}
+
 	signOut(): Promise<void> {
 		return this.afAuth.auth.signOut();
 	}

@@ -51,6 +51,11 @@ export class AppComponent implements OnInit {
 				icon: 'home'
 			},
 			{
+				title: 'قائمة الاشخاص',
+				component: 'addperson',
+				icon: 'people'
+			},
+			{
 				title: 'اضافة شخص',
 				component: 'addperson',
 				icon: 'person-add'
@@ -68,6 +73,8 @@ export class AppComponent implements OnInit {
 			this.logout();
 		} else if (page.title === 'اضافة شخص') {
 			this.navCtrl.navigateRoot('add-person');
+		} else if (page.title == 'قائمة الاشخاص') {
+			this.navCtrl.navigateForward('people-list');
 		}
 	}
 

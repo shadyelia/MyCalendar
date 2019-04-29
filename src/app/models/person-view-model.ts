@@ -6,5 +6,5 @@ export class Person {
 	dateOfBirth: string;
 	email: string;
 	numberOfVisits: number = 0;
-	userEmail: string;
+	//userEmail: string;
 }

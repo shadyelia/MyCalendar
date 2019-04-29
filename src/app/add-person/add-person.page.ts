@@ -37,9 +37,8 @@ export class AddPersonPage implements OnInit {
 			this.person.gender = this.registrationFrom.get('gender').value;
 			this.person.name = this.registrationFrom.get('name').value;
 			this.person.phone = this.registrationFrom.get('phone').value;
-			this.person.userEmail = this.auth.getEmail();
 
-			this.db.list('/People').push(this.person);
+			this.db.list('/People/' + this.auth.getUserId()).push(this.person);
 		}
 	}
 }

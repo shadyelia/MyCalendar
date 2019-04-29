@@ -13,6 +13,29 @@
 			<ion-row>
 				<ion-col form-icon-input>
 					<ion-item no-padding>
+						<ion-icon item-start name="person"></ion-icon>
+						<ion-label class="ion-label-font">الاسم *</ion-label>
+						<ion-input
+							matInput
+							type="text"
+							formControlName="name"
+						></ion-input>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('name').hasError('required') &&
+							(registrationFrom.get('name').touched || showValid)
+						"
+					>
+						مطلوب الاسم
+					</div>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
 						<ion-icon item-start name="mail"></ion-icon>
 						<ion-label class="ion-label-font" floating
 							>البريد الالكترونى *</ion-label

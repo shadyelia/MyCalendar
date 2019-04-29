@@ -9,25 +9,18 @@
 
 <ion-content class="backgroundColor">
 	<form padding-bottom [formGroup]="registrationFrom" dir="rtl">
-		<!-- 
-        *** IMPORTANT ***
-        - change commented error message based on every filed 
-        - i don't create form filed in controller
-        - Don't forget delete this message after finish validate the form
-      -->
-
 		<ion-grid padding>
-			<!-- start email filed and error message -->
 			<ion-row>
 				<ion-col form-icon-input>
 					<ion-item no-padding>
 						<ion-icon item-start name="mail"></ion-icon>
-						<ion-label floating>البريد الالكترونى *</ion-label>
+						<ion-label class="ion-label-font" floating
+							>البريد الالكترونى *</ion-label
+						>
 						<ion-input
 							matInput
 							type="email"
 							formControlName="email"
-							class="inputColor"
 						></ion-input>
 					</ion-item>
 					<div
@@ -52,21 +45,20 @@
 					</div>
 				</ion-col>
 			</ion-row>
-			<!-- end email filed and error message -->
 
-			<!-- start password filed and error message -->
 			<ion-row>
 				<ion-col form-icon-input>
 					<ion-item no-padding>
 						<ion-icon item-start name="lock"></ion-icon>
-						<ion-label floating>كلمة السر *</ion-label>
+						<ion-label class="ion-label-font" floating
+							>كلمة السر *</ion-label
+						>
 						<ion-input
 							matInput
 							[type]="showPassword ? 'text' : 'password'"
 							formControlName="password"
 							clearOnEdit="false"
 							validateEqualTo="confirmPassword"
-							class="inputColor"
 						></ion-input>
 						<ion-icon
 							tappable
@@ -117,21 +109,20 @@
 					></div>
 				</ion-col>
 			</ion-row>
-			<!-- end password filed and error message -->
 
-			<!-- start confirm password filed and error message -->
 			<ion-row>
 				<ion-col form-icon-input>
 					<ion-item no-padding>
 						<ion-icon item-start name="lock"></ion-icon>
-						<ion-label floating>تاكيد كلمة السر *</ion-label>
+						<ion-label class="ion-label-font" floating
+							>تاكيد كلمة السر *</ion-label
+						>
 						<ion-input
 							matInput
 							[type]="showConfirmPassword ? 'text' : 'password'"
 							formControlName="confirmPassword"
 							clearOnEdit="false"
 							validateEqualTo="confirmPassword"
-							class="inputColor"
 						></ion-input>
 						<ion-icon
 							tappable
@@ -175,12 +166,10 @@
 					</div>
 				</ion-col>
 			</ion-row>
-			<!-- end confirm password filed and error message -->
 		</ion-grid>
 	</form>
 </ion-content>
 
-<!-- actions button  -->
 <ion-footer>
 	<ion-button expand="block" color="medium" (click)="signUp()"
 		>التسجيل</ion-button

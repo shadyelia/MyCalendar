@@ -4,7 +4,21 @@
 /** Ionic CSS Variables **/
 
 :root {
-	.inputColor {
+	.ion-label-font {
+		color: black !important;
+		margin-right: 5px;
+		font-family: monospace;
+		font-size: x-large;
+		font-weight: 600;
+		//font-style: oblique;
+	}
+
+	ion-button {
+		font-family: monospace;
+		font-size: x-large;
+	}
+
+	ion-input {
 		background-color: aliceblue;
 	}
 	.error-message {
@@ -93,7 +107,10 @@
 $app-direction: rtl;
 
 .bigFont {
-	font-size: -webkit-xxx-large;
+	text-align: -webkit-center;
+	font-size: xx-large;
+	//font-style: oblique;
+	font-family: fantasy;
 }
 
 .label {
@@ -106,12 +123,11 @@ ion-icon {
 }
 
 ion-menu {
-	--ion-background-color: #00d2ff;
-	--ion-text-color: var(--ion-color-primary-contrast);
-	--ion-background: -webkit-linear-gradient(to left, #3a7bd5, #00d2ff);
+	--ion-background-color: #b2c5e060;
+	--ion-text-color: #5e7b81;
 
 	ion-toolbar {
-		--background: var(--ion-color-primary);
+		--background: #4c676d71;
 	}
 
 	ion-list {

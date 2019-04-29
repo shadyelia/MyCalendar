@@ -1,0 +1,168 @@
+<ion-header>
+	<ion-toolbar dir="rtl" color="medium">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title text-center>اضافة شخص</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<form [formGroup]="registrationFrom" dir="rtl">
+		<ion-grid padding>
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="person"></ion-icon>
+						<ion-label class="ion-label-font">الاسم *</ion-label>
+						<ion-input
+							matInput
+							type="text"
+							formControlName="name"
+						></ion-input>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('name').hasError('required') &&
+							(registrationFrom.get('name').touched || showValid)
+						"
+					>
+						مطلوب الاسم
+					</div>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="transgender"></ion-icon>
+						<ion-label class="ion-label-font" floating>
+							النوع
+						</ion-label>
+						<ion-select formControlName="gender">
+							<ion-select-option value="Male">
+								ذكر
+							</ion-select-option>
+							<ion-select-option value="Female">
+								انثى
+							</ion-select-option>
+						</ion-select>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom
+								.get('gender')
+								.hasError('required') &&
+							(registrationFrom.get('gender').touched ||
+								showValid)
+						"
+					>
+						مطلوب النوع
+					</div>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="call"></ion-icon>
+						<ion-label class="ion-label-font" floating
+							>رقم الهاتف *</ion-label
+						>
+						<ion-input
+							matInput
+							type="text"
+							formControlName="phone"
+						></ion-input>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom
+								.get('phone')
+								.hasError('required') &&
+							(registrationFrom.get('phone').touched || showValid)
+						"
+					>
+						مطلوب الهاتف
+					</div>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="calendar"></ion-icon>
+						<ion-label class="ion-label-font" floating>
+							تاريخ الميلاد</ion-label
+						>
+						<ion-datetime
+							displayFormat="YYYY/MM/DD"
+							formControlName="dateOfBirth"
+							max="2010"
+						></ion-datetime>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							(registrationFrom
+								.get('dateOfBirth')
+								.hasError('required') &&
+								registrationFrom.get('dateOfBirth').touched) ||
+							(registrationFrom
+								.get('dateOfBirth')
+								.hasError('required') &&
+								showValid)
+						"
+					>
+						مطلوب تاريخ الميلاد
+					</div>
+				</ion-col>
+			</ion-row>
+
+			<ion-row>
+				<ion-col form-icon-input>
+					<ion-item no-padding>
+						<ion-icon item-start name="mail"></ion-icon>
+						<ion-label class="ion-label-font" floating
+							>البريد الالكترونى *</ion-label
+						>
+						<ion-input
+							matInput
+							type="email"
+							formControlName="email"
+						></ion-input>
+					</ion-item>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom.get('email').hasError('email') &&
+							!registrationFrom.get('email').hasError('required')
+						"
+					>
+						بريد الكترونى غير صحيح
+					</div>
+					<div
+						class="error-message"
+						*ngIf="
+							registrationFrom
+								.get('email')
+								.hasError('required') &&
+							(registrationFrom.get('email').touched || showValid)
+						"
+					>
+						مطلوب البريد الالكترونى
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</form>
+</ion-content>
+
+<ion-footer>
+	<ion-button expand="block" color="medium" (click)="save()"
+		>اضافة</ion-button
+	>
+</ion-footer>

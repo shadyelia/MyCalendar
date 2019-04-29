@@ -1,10 +1,5 @@
 import { Component } from '@angular/core';
-import {
-	FormBuilder,
-	FormGroup,
-	Validators,
-	FormControl
-} from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { NavController, AlertController, MenuController } from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
@@ -23,7 +18,6 @@ export class SignupPage {
 	confirmPasswordType: string;
 
 	constructor(
-		fb: FormBuilder,
 		private navCtrl: NavController,
 		private auth: AuthService,
 		public menu: MenuController,

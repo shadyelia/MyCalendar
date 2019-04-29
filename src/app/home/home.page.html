@@ -71,7 +71,6 @@
 		<!-- Change the displayed calendar mode -->
 		<ion-col size="4">
 			<ion-button
-				class="bigFont"
 				expand="block"
 				[color]="calendar.mode == 'month' ? 'primary' : 'secondary'"
 				(click)="changeMode('month')"
@@ -80,7 +79,6 @@
 		</ion-col>
 		<ion-col size="4">
 			<ion-button
-				class="bigFont"
 				expand="block"
 				[color]="calendar.mode == 'week' ? 'primary' : 'secondary'"
 				(click)="changeMode('week')"
@@ -89,7 +87,6 @@
 		</ion-col>
 		<ion-col size="4">
 			<ion-button
-				class="bigFont"
 				expand="block"
 				[color]="calendar.mode == 'day' ? 'primary' : 'secondary'"
 				(click)="changeMode('day')"
@@ -105,7 +102,7 @@
 		</ion-col>
 
 		<ion-col size="6" text-center dir="rtl">
-			<ion-label class="bigFont">
+			<ion-label class="ion-label-font">
 				{{ viewTitle }}
 			</ion-label>
 			<ion-button fill="clear" (click)="today()">
@@ -137,3 +134,14 @@
 	>
 	</calendar>
 </ion-content>
+
+<ion-fab vertical="bottom" horizontal="start">
+	<ion-fab-button color="medium">
+		<ion-icon name="add"></ion-icon>
+	</ion-fab-button>
+	<ion-fab-list side="top">
+		<ion-fab-button data-desc="اضافة موعد">
+			<ion-icon name="alarm"></ion-icon>
+		</ion-fab-button>
+	</ion-fab-list>
+</ion-fab>

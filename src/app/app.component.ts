@@ -66,6 +66,8 @@ export class AppComponent implements OnInit {
 	openPage(page) {
 		if (page.title === 'الخروج') {
 			this.logout();
+		} else if (page.title === 'اضافة شخص') {
+			this.navCtrl.navigateRoot('add-person');
 		}
 	}
 

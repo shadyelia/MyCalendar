@@ -28,12 +28,13 @@
 				<ion-col form-icon-input>
 					<ion-item no-padding>
 						<ion-icon item-start name="mail"></ion-icon>
-						<ion-label floating>البريد الالكترونى</ion-label>
+						<ion-label class="ion-label-font" floating
+							>البريد الالكترونى</ion-label
+						>
 						<ion-input
 							matInput
 							type="email"
 							formControlName="email"
-							class="inputColor"
 						></ion-input>
 					</ion-item>
 					<div
@@ -63,13 +64,14 @@
 				<ion-col form-icon-input>
 					<ion-item no-padding>
 						<ion-icon item-start name="lock"></ion-icon>
-						<ion-label floating>كلمة سر</ion-label>
+						<ion-label class="ion-label-font" floating
+							>كلمة سر</ion-label
+						>
 						<ion-input
 							matInput
 							type="{{ passwordType }}"
 							formControlName="password"
 							clearOnEdit="false"
-							class="inputColor"
 						></ion-input>
 						<ion-icon
 							tappable

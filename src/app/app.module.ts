@@ -17,6 +17,8 @@ registerLocaleData(localeArEG, localeArEGExtra);
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
+
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -26,7 +28,8 @@ import { environment } from '../environments/environment';
 		BrowserModule,
 		IonicModule.forRoot(),
 		AppRoutingModule,
-		AngularFireModule.initializeApp(environment.firebaseConfig)
+		AngularFireModule.initializeApp(environment.firebaseConfig),
+		AngularFireDatabaseModule
 	],
 	providers: [
 		StatusBar,

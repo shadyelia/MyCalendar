@@ -13,6 +13,8 @@ import { registerLocaleData } from '@angular/common';
 import localeArEG from '@angular/common/locales/ar-EG';
 import localeArEGExtra from '@angular/common/locales/extra/ar-EG';
 
+import { PersonDetailsModalPageModule } from './person-details-modal/person-details-modal.module';
+
 registerLocaleData(localeArEG, localeArEGExtra);
 
 import { AngularFireModule } from 'angularfire2';
@@ -29,7 +31,8 @@ import { environment } from '../environments/environment';
 		IonicModule.forRoot(),
 		AppRoutingModule,
 		AngularFireModule.initializeApp(environment.firebaseConfig),
-		AngularFireDatabaseModule
+		AngularFireDatabaseModule,
+		PersonDetailsModalPageModule
 	],
 	providers: [
 		StatusBar,

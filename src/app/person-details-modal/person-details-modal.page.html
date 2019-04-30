@@ -1,0 +1,34 @@
+<ion-header>
+	<ion-toolbar dir="rtl" color="medium">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title text-center>بيانات {{ personObject.name }}</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-grid dir="rlt">
+		<ion-row>
+			<ion-col text-center class="ion-label-font">
+				{{ personObject.phone }} : الرقم
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col text-center class="ion-label-font">
+				{{ personObject.email }} : البريد الالكترونى
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col text-center class="ion-label-font">
+				{{ personObject.numberOfVisits }} : عدد مرات الزيارة
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
+
+<ion-footer>
+	<ion-button expand="block" color="medium" (click)="closeModal()"
+		>إغلاق</ion-button
+	>
+</ion-footer>

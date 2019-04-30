@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../../services/auth.service';
 import { NavController } from '@ionic/angular';
+import { PersonDetailsModalPage } from '../person-details-modal/person-details-modal.page';
+import { ModalController } from '@ionic/angular';
 
 @Component({
 	selector: 'app-people-list',
@@ -13,7 +15,8 @@ export class PeopleListPage implements OnInit {
 	constructor(
 		private db: AngularFireDatabase,
 		private auth: AuthService,
-		private navCtrl: NavController
+		private navCtrl: NavController,
+		public modalController: ModalController
 	) {}
 
 	ngOnInit() {
@@ -28,7 +31,18 @@ export class PeopleListPage implements OnInit {
 			});
 	}
 
-	openPersonDetails(index: number) {}
+	async openPersonDetails(index: number) {
+		const modal = await this.modalController.create({
+			component: PersonDetailsModalPage,
+			componentProps: {
+				personObject: this.people[index]
+			}
+		});
+
+		modal.onDidDismiss().then(dataReturned => {});
+
+		return await modal.present();
+	}
 
 	deletePerson(index: number) {}
 

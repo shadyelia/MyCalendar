@@ -15,21 +15,26 @@ export class AddEventPage implements OnInit {
 	eventForm: FormGroup;
 	showValid: boolean = false;
 	event = new Event();
+	personObject: any;
 
 	constructor(
 		private navCtrl: NavController,
 		private db: AngularFireDatabase,
 		private auth: AuthService
-	) {
+	) {}
+
+	ngOnInit() {
+		this.personObject = JSON.parse(localStorage.getItem('personObject'));
 		this.eventForm = new FormGroup({
-			personKey: new FormControl('', Validators.required),
+			personKey: new FormControl(
+				{ value: this.personObject.key, disabled: true },
+				Validators.required
+			),
 			startTime: new FormControl('', Validators.required),
 			endTime: new FormControl('', Validators.required),
 			numberInMonth: new FormControl('', Validators.required)
 		});
 	}
-
-	ngOnInit() {}
 
 	addEvent() {
 		if (this.eventForm.valid) {
@@ -41,7 +46,7 @@ export class AddEventPage implements OnInit {
 			this.event.startTime = this.eventForm.get('startTime').value;
 
 			this.db.list('/Events/' + this.auth.getUserId()).push(this.event);
-			this.navCtrl.navigateForward('home');
+			this.navCtrl.navigateRoot('home');
 		}
 	}
 }

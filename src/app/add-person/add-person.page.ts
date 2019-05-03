@@ -54,7 +54,7 @@ export class AddPersonPage implements OnInit {
 			this.person.phone = this.registrationFrom.get('phone').value;
 
 			this.db.list('/People/' + this.auth.getUserId()).push(this.person);
-			this.navCtrl.navigateForward('people-list');
+			this.navCtrl.navigateRoot('people-list');
 		}
 	}
 }

@@ -25,7 +25,7 @@ export class PeopleListPage implements OnInit {
 			.once('value')
 			.then(snapShot => {
 				snapShot.forEach(s => {
-					this.people.push(s.val());
+					this.people.push({ key: s.key, value: s.val() });
 				});
 				console.log(this.people);
 			});
@@ -55,6 +55,6 @@ export class PeopleListPage implements OnInit {
 	deletePerson(index: number) {}
 
 	addPerson() {
-		this.navCtrl.navigateRoot('add-person');
+		this.navCtrl.navigateForward('add-person');
 	}
 }

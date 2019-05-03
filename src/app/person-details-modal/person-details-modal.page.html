@@ -11,20 +11,26 @@
 	<ion-grid dir="rlt">
 		<ion-row>
 			<ion-col text-center class="ion-label-font">
-				{{ personObject.phone }} : الرقم
+				{{ personObject.value.phone }} : الرقم
 			</ion-col>
 		</ion-row>
 		<ion-row>
 			<ion-col text-center class="ion-label-font">
-				{{ personObject.email }} : البريد الالكترونى
+				{{ personObject.value.email }} : البريد الالكترونى
 			</ion-col>
 		</ion-row>
 		<ion-row>
 			<ion-col text-center class="ion-label-font">
-				{{ personObject.numberOfVisits }} : عدد مرات الزيارة
+				{{ personObject.value.numberOfVisits }} : عدد مرات الزيارة
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+
+	<ion-fab vertical="bottom" horizontal="start" mini>
+		<ion-fab-button color="medium" (click)="openAddEvent()">
+			<ion-icon name="alarm"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
 </ion-content>
 
 <ion-footer>

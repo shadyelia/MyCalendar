@@ -9,7 +9,9 @@
 
 <ion-content>
 	<ion-item no-padding *ngFor="let person of people; let i = index" dir="rtl">
-		<p tappable (click)="openPersonDetails(i)">{{ person.name }}</p>
+		<p tappable (click)="openPersonDetails(i)" class="fullWidth">
+			{{ person.value.name }}
+		</p>
 		<!-- <ion-icon
 			tappable
 			side="end"

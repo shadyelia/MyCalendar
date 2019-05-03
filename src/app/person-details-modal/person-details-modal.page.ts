@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, NavController } from '@ionic/angular';
 
 @Component({
 	selector: 'app-person-details-modal',
@@ -10,13 +10,20 @@ export class PersonDetailsModalPage implements OnInit {
 	personObject: any;
 
 	constructor(
+		private navCtrl: NavController,
 		private modalController: ModalController,
 		private navParams: NavParams
 	) {}
 
 	ngOnInit() {
-		console.table(this.navParams);
+		//console.table(this.navParams);
 		this.personObject = this.navParams.data.personObject;
+	}
+
+	async openAddEvent() {
+		await this.modalController.dismiss();
+		localStorage.setItem('personObject', JSON.stringify(this.personObject));
+		this.navCtrl.navigateForward('add-event');
 	}
 
 	async closeModal() {

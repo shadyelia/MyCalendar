@@ -3,7 +3,9 @@
 		<ion-buttons slot="start">
 			<ion-back-button></ion-back-button>
 		</ion-buttons>
-		<ion-title text-center>اضافة موعد</ion-title>
+		<ion-title text-center
+			>اضافة موعد ل{{ this.personObject.value.name }}</ion-title
+		>
 	</ion-toolbar>
 </ion-header>
 
@@ -13,13 +15,6 @@
 		</ion-card-header>
 		<ion-card-content *ngIf="!collapseCard">
 			<form [formGroup]="eventForm" dir="rtl">
-				<ion-item>
-					<ion-input
-						type="text"
-						placeholder="الشخص"
-						formControlName="personKey"
-					></ion-input>
-				</ion-item>
 				<ion-item>
 					<ion-label>Start</ion-label>
 					<ion-datetime

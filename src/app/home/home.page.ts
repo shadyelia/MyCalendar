@@ -134,8 +134,4 @@ export class HomePage implements OnInit {
 		selected.setHours(selected.getHours() + 1);
 		this.event.endTime = selected.toISOString();
 	}
-
-	openAddEvent() {
-		this.navCtrl.navigateForward('add-event');
-	}
 }

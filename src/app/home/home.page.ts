@@ -1,6 +1,6 @@
 import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
 
 	minDate = new Date().toISOString();
 
-	eventSource = [];
+	eventSource = []; //da al btmap al event f al calendar
 	viewTitle;
 
 	calendar = {
@@ -32,6 +32,7 @@ export class HomePage implements OnInit {
 	@ViewChild(CalendarComponent) myCal: CalendarComponent;
 
 	constructor(
+		private navCtrl: NavController,
 		private alertCtrl: AlertController,
 		@Inject(LOCALE_ID) private locale: string
 	) {}
@@ -132,5 +133,9 @@ export class HomePage implements OnInit {
 		this.event.startTime = selected.toISOString();
 		selected.setHours(selected.getHours() + 1);
 		this.event.endTime = selected.toISOString();
+	}
+
+	openAddEvent() {
+		this.navCtrl.navigateForward('add-event');
 	}
 }

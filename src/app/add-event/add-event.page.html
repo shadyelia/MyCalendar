@@ -1,58 +1,65 @@
 <ion-header>
-	<ion-toolbar>
-		<ion-title>add-event</ion-title>
+	<ion-toolbar dir="rtl" color="medium">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title text-center>اضافة موعد</ion-title>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<!-- <ion-card>
+	<ion-card>
 		<ion-card-header tappable (click)="collapseCard = !collapseCard">
-			<ion-card-title>New Event</ion-card-title>
 		</ion-card-header>
 		<ion-card-content *ngIf="!collapseCard">
-			<ion-item>
-				<ion-input
-					type="text"
-					placeholder="Title"
-					[(ngModel)]="event.title"
-				></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-input
-					type="text"
-					placeholder="Description"
-					[(ngModel)]="event.desc"
-				></ion-input>
-			</ion-item>
-			<ion-item>
-				<ion-label>Start</ion-label>
-				<ion-datetime
-					displayFormat="MM/DD/YYYY HH:mm"
-					pickerFormat="MMM D:HH:mm"
-					[(ngModel)]="event.startTime"
-					[min]="minDate"
-				></ion-datetime>
-			</ion-item>
-			<ion-item>
-				<ion-label>End</ion-label>
-				<ion-datetime
-					displayFormat="MM/DD/YYYY HH:mm"
-					pickerFormat="MMM D:HH:mm"
-					[(ngModel)]="event.endTime"
-					[min]="minDate"
-				></ion-datetime>
-			</ion-item>
-			<ion-item>
-				<ion-label>All Day?</ion-label>
-				<ion-checkbox [(ngModel)]="event.allDay"></ion-checkbox>
-			</ion-item>
-			<ion-button
-				fill="outline"
-				expand="block"
-				(click)="addEvent()"
-				[disabled]="event.title == ''"
-				>Add Event</ion-button
-			>
+			<form [formGroup]="eventForm" dir="rtl">
+				<ion-item>
+					<ion-input
+						type="text"
+						placeholder="الشخص"
+						formControlName="personKey"
+					></ion-input>
+				</ion-item>
+				<ion-item>
+					<ion-label>Start</ion-label>
+					<ion-datetime
+						displayFormat="MM/DD/YYYY HH:mm"
+						pickerFormat="MMM D:HH:mm"
+						formControlName="startTime"
+						[min]="minDate"
+					></ion-datetime>
+				</ion-item>
+				<ion-item>
+					<ion-label>End</ion-label>
+					<ion-datetime
+						displayFormat="MM/DD/YYYY HH:mm"
+						pickerFormat="MMM D:HH:mm"
+						formControlName="endTime"
+						[min]="minDate"
+					></ion-datetime>
+				</ion-item>
+				<ion-item>
+					<ion-label> عدد التكرار فى الشهر</ion-label>
+					<ion-select formControlName="numberInMonth">
+						<ion-select-option value="1">
+							1
+						</ion-select-option>
+						<ion-select-option value="2">
+							2
+						</ion-select-option>
+						<ion-select-option value="2">
+							4
+						</ion-select-option>
+					</ion-select>
+				</ion-item>
+				<ion-button
+					fill="outline"
+					expand="block"
+					(click)="addEvent()"
+					[disabled]="!eventForm.valid"
+					>اضافة</ion-button
+				>
+			</form>
 		</ion-card-content>
-	</ion-card> -->
+	</ion-card>
 </ion-content>

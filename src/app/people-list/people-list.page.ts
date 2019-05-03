@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../../services/auth.service';
-import { NavController } from '@ionic/angular';
+import { NavController, MenuController, ModalController } from '@ionic/angular';
 import { PersonDetailsModalPage } from '../person-details-modal/person-details-modal.page';
-import { ModalController } from '@ionic/angular';
 
 @Component({
 	selector: 'app-people-list',
@@ -16,7 +15,8 @@ export class PeopleListPage implements OnInit {
 		private db: AngularFireDatabase,
 		private auth: AuthService,
 		private navCtrl: NavController,
-		public modalController: ModalController
+		public modalController: ModalController,
+		public menu: MenuController
 	) {}
 
 	ngOnInit() {
@@ -29,6 +29,14 @@ export class PeopleListPage implements OnInit {
 				});
 				console.log(this.people);
 			});
+	}
+
+	ionViewDidEnter() {
+		this.menu.close();
+		this.menu.enable(false);
+	}
+	ionViewWillLeave() {
+		this.menu.enable(true);
 	}
 
 	async openPersonDetails(index: number) {

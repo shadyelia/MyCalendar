@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
 		if (page.title === 'الخروج') {
 			this.logout();
 		} else if (page.title === 'اضافة شخص') {
-			this.navCtrl.navigateRoot('add-person');
+			this.navCtrl.navigateForward('add-person');
 		} else if (page.title == 'قائمة الاشخاص') {
 			this.navCtrl.navigateForward('people-list');
 		}

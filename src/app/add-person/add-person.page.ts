@@ -3,6 +3,8 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Person } from '../models/person-view-model';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../../services/auth.service';
+import { NavController, MenuController } from '@ionic/angular';
+
 @Component({
 	selector: 'app-add-person',
 	templateUrl: './add-person.page.html',
@@ -13,7 +15,12 @@ export class AddPersonPage implements OnInit {
 	showValid: boolean = false;
 	person = new Person();
 
-	constructor(private db: AngularFireDatabase, private auth: AuthService) {
+	constructor(
+		private navCtrl: NavController,
+		private db: AngularFireDatabase,
+		private auth: AuthService,
+		public menu: MenuController
+	) {
 		this.registrationFrom = new FormGroup({
 			name: new FormControl('', Validators.required),
 			gender: new FormControl('', Validators.required),
@@ -28,6 +35,14 @@ export class AddPersonPage implements OnInit {
 
 	ngOnInit() {}
 
+	ionViewDidEnter() {
+		this.menu.close();
+		this.menu.enable(false);
+	}
+	ionViewWillLeave() {
+		this.menu.enable(true);
+	}
+
 	save() {
 		if (this.registrationFrom.valid) {
 			this.person.dateOfBirth = this.registrationFrom.get(
@@ -39,6 +54,7 @@ export class AddPersonPage implements OnInit {
 			this.person.phone = this.registrationFrom.get('phone').value;
 
 			this.db.list('/People/' + this.auth.getUserId()).push(this.person);
+			this.navCtrl.navigateForward('people-list');
 		}
 	}
 }

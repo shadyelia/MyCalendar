@@ -16,21 +16,36 @@
 		<ion-card-content *ngIf="!collapseCard">
 			<form [formGroup]="eventForm" dir="rtl">
 				<ion-item>
-					<ion-label>Start</ion-label>
+					<ion-label>اليوم</ion-label>
+					<ion-select formControlName="day">
+						<ion-select-option value="0"> الاحد</ion-select-option>
+						<ion-select-option value="1">الاثنين</ion-select-option>
+						<ion-select-option value="2"
+							>الثلاثاء</ion-select-option
+						>
+						<ion-select-option value="3"
+							>الاربعاء</ion-select-option
+						>
+						<ion-select-option value="4">الخميس</ion-select-option>
+						<ion-select-option value="5">الجمعة</ion-select-option>
+						<ion-select-option value="6">السبت</ion-select-option>
+					</ion-select>
+				</ion-item>
+
+				<ion-item>
+					<ion-label>البداية</ion-label>
 					<ion-datetime
-						displayFormat="MM/DD/YYYY HH:mm"
-						pickerFormat="MMM D:HH:mm"
+						displayFormat="hh:mm A"
+						pickerFormat="hh:mm A"
 						formControlName="startTime"
-						[min]="minDate"
 					></ion-datetime>
 				</ion-item>
 				<ion-item>
-					<ion-label>End</ion-label>
+					<ion-label>النهاية</ion-label>
 					<ion-datetime
-						displayFormat="MM/DD/YYYY HH:mm"
-						pickerFormat="MMM D:HH:mm"
+						displayFormat="hh:mm A"
+						pickerFormat="hh:mm A"
 						formControlName="endTime"
-						[min]="minDate"
 					></ion-datetime>
 				</ion-item>
 				<ion-item>
@@ -42,7 +57,7 @@
 						<ion-select-option value="2">
 							2
 						</ion-select-option>
-						<ion-select-option value="2">
+						<ion-select-option value="4">
 							4
 						</ion-select-option>
 					</ion-select>

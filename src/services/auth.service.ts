@@ -43,6 +43,7 @@ export class AuthService {
 	}
 
 	signOut(): Promise<void> {
+		localStorage.clear();
 		return this.afAuth.auth.signOut();
 	}
 }

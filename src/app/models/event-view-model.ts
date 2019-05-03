@@ -1,7 +1,8 @@
 export class Event {
 	$key: string;
+	title: string;
 	PersonKey: string;
-	numberInMonth: number;
 	startTime: string;
 	endTime: string;
+	desc: string;
 }

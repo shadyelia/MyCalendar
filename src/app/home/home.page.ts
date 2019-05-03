@@ -1,26 +1,21 @@
 import { CalendarComponent } from 'ionic2-calendar/calendar';
-import { Component, ViewChild, OnInit, Inject, LOCALE_ID } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { Component, ViewChild, Inject, LOCALE_ID } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
+import { AngularFireDatabase } from '@angular/fire/database';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
 	selector: 'app-home',
 	templateUrl: 'home.page.html',
 	styleUrls: ['home.page.scss']
 })
-export class HomePage implements OnInit {
+export class HomePage {
 	collapseCard: boolean = false;
-	event = {
-		title: '',
-		desc: '',
-		startTime: '',
-		endTime: '',
-		allDay: false
-	};
 
 	minDate = new Date().toISOString();
 
-	eventSource = []; //da al btmap al event f al calendar
+	eventSource = [];
 	viewTitle;
 
 	calendar = {
@@ -32,58 +27,38 @@ export class HomePage implements OnInit {
 	@ViewChild(CalendarComponent) myCal: CalendarComponent;
 
 	constructor(
-		private navCtrl: NavController,
+		private db: AngularFireDatabase,
+		private auth: AuthService,
 		private alertCtrl: AlertController,
 		@Inject(LOCALE_ID) private locale: string
 	) {}
 
-	ngOnInit() {
-		this.resetEvent();
-	}
-
-	resetEvent() {
-		this.event = {
-			title: '',
-			desc: '',
-			startTime: new Date().toISOString(),
-			endTime: new Date().toISOString(),
-			allDay: false
-		};
+	ionViewWillEnter() {
+		this.auth.afAuth.authState.subscribe(user => {
+			if (user) {
+				this.db.database
+					.ref(`/Events/` + user['uid'])
+					.once('value')
+					.then(snapShot => {
+						snapShot.forEach(s => {
+							this.addEvent(s.val());
+						});
+						this.myCal.loadEvents();
+					});
+			}
+		});
 	}
 
 	// Create the right event format and reload source
-	addEvent() {
+	addEvent(event: any) {
 		let eventCopy = {
-			title: this.event.title,
-			startTime: new Date(this.event.startTime),
-			endTime: new Date(this.event.endTime),
-			allDay: this.event.allDay,
-			desc: this.event.desc
+			title: event['title'],
+			startTime: new Date(event['startTime']),
+			endTime: new Date(event['endTime']),
+			desc: event['desc']
 		};
 
-		if (eventCopy.allDay) {
-			let start = eventCopy.startTime;
-			let end = eventCopy.endTime;
-
-			eventCopy.startTime = new Date(
-				Date.UTC(
-					start.getUTCFullYear(),
-					start.getUTCMonth(),
-					start.getUTCDate()
-				)
-			);
-			eventCopy.endTime = new Date(
-				Date.UTC(
-					end.getUTCFullYear(),
-					end.getUTCMonth(),
-					end.getUTCDate() + 1
-				)
-			);
-		}
-
 		this.eventSource.push(eventCopy);
-		this.myCal.loadEvents();
-		this.resetEvent();
 	}
 
 	// Change current month/week/day
@@ -127,11 +102,11 @@ export class HomePage implements OnInit {
 		alert.present();
 	}
 
-	// Time slot was clicked
-	onTimeSelected(ev) {
-		let selected = new Date(ev.selectedTime);
-		this.event.startTime = selected.toISOString();
-		selected.setHours(selected.getHours() + 1);
-		this.event.endTime = selected.toISOString();
-	}
+	// // Time slot was clicked
+	// onTimeSelected(ev) {
+	// 	let selected = new Date(ev.selectedTime);
+	// 	this.event.startTime = selected.toISOString();
+	// 	selected.setHours(selected.getHours() + 1);
+	// 	this.event.endTime = selected.toISOString();
+	// }
 }

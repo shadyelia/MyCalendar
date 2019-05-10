@@ -15,6 +15,7 @@ export class AddEventPage implements OnInit {
 	eventForm: FormGroup;
 	showValid: boolean = false;
 	personObject: any;
+	collapseCard: boolean = false;
 
 	constructor(
 		private navCtrl: NavController,

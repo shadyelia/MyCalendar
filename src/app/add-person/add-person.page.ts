@@ -25,11 +25,8 @@ export class AddPersonPage implements OnInit {
 			name: new FormControl('', Validators.required),
 			gender: new FormControl('', Validators.required),
 			phone: new FormControl('', Validators.required),
-			dateOfBirth: new FormControl('', Validators.required),
-			email: new FormControl(
-				'',
-				Validators.compose([Validators.required, Validators.email])
-			)
+			dateOfBirth: new FormControl(''),
+			email: new FormControl('', Validators.email)
 		});
 	}
 

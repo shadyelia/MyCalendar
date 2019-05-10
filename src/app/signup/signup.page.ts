@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
-import { NavController, AlertController, MenuController } from '@ionic/angular';
+import {
+	NavController,
+	AlertController,
+	MenuController,
+	LoadingController
+} from '@ionic/angular';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -16,12 +21,14 @@ export class SignupPage {
 	passwordType: string;
 	showConfirmPassword: boolean;
 	confirmPasswordType: string;
+	loaderToShow: any;
 
 	constructor(
 		private navCtrl: NavController,
 		private auth: AuthService,
 		public menu: MenuController,
-		private alertCtrl: AlertController
+		private alertCtrl: AlertController,
+		public loadingController: LoadingController
 	) {
 		this.registrationFrom = new FormGroup({
 			name: new FormControl('', Validators.required),
@@ -64,6 +71,7 @@ export class SignupPage {
 	}
 
 	signUp() {
+		this.showLoader();
 		let data = this.registrationFrom.value;
 		let credentials = {
 			displayName: data.name,
@@ -71,16 +79,36 @@ export class SignupPage {
 			password: data.password
 		};
 		this.auth.signUp(credentials).then(
-			() => this.navCtrl.navigateRoot('home'),
+			() => {
+				this.hideLoader();
+				this.navCtrl.navigateRoot('home');
+			},
 			async error => {
 				const alert = await this.alertCtrl.create({
 					header: 'خطأ',
 					message: 'البريد الالكترونى متكرر',
 					buttons: ['اغلاق']
 				});
+				this.hideLoader();
 				alert.present();
 			}
 		);
+	}
+
+	showLoader() {
+		this.loaderToShow = this.loadingController
+			.create({
+				message: 'الرجاء الانتظار'
+			})
+			.then(res => {
+				res.present();
+
+				res.onDidDismiss().then(dis => {});
+			});
+	}
+
+	hideLoader() {
+		this.loadingController.dismiss();
 	}
 
 	handelShowPassword() {

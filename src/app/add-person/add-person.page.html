@@ -104,21 +104,6 @@
 							max="2015"
 						></ion-datetime>
 					</ion-item>
-					<div
-						class="error-message"
-						*ngIf="
-							(registrationFrom
-								.get('dateOfBirth')
-								.hasError('required') &&
-								registrationFrom.get('dateOfBirth').touched) ||
-							(registrationFrom
-								.get('dateOfBirth')
-								.hasError('required') &&
-								showValid)
-						"
-					>
-						مطلوب تاريخ الميلاد
-					</div>
 				</ion-col>
 			</ion-row>
 
@@ -143,17 +128,6 @@
 						"
 					>
 						بريد الكترونى غير صحيح
-					</div>
-					<div
-						class="error-message"
-						*ngIf="
-							registrationFrom
-								.get('email')
-								.hasError('required') &&
-							(registrationFrom.get('email').touched || showValid)
-						"
-					>
-						مطلوب البريد الالكترونى
 					</div>
 				</ion-col>
 			</ion-row>

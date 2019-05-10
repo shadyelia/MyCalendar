@@ -1,6 +1,6 @@
 import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { Component, ViewChild, Inject, LOCALE_ID } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { formatDate } from '@angular/common';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../../services/auth.service';
@@ -12,6 +12,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomePage {
 	collapseCard: boolean = false;
+	loaderToShow: any;
 
 	minDate = new Date().toISOString();
 
@@ -30,22 +31,26 @@ export class HomePage {
 		private db: AngularFireDatabase,
 		private auth: AuthService,
 		private alertCtrl: AlertController,
+		public loadingController: LoadingController,
 		@Inject(LOCALE_ID) private locale: string
 	) {}
 
 	ionViewWillEnter() {
+		this.showLoader();
 		this.auth.afAuth.authState.subscribe(user => {
 			if (user) {
 				this.db.database
 					.ref(`/Events/` + user['uid'])
 					.once('value')
 					.then(snapShot => {
+						this.hideLoader();
 						snapShot.forEach(s => {
 							this.addEvent(s.val());
 						});
 						this.myCal.loadEvents();
 					});
 			}
+			this.hideLoader();
 		});
 	}
 
@@ -102,11 +107,19 @@ export class HomePage {
 		alert.present();
 	}
 
-	// // Time slot was clicked
-	// onTimeSelected(ev) {
-	// 	let selected = new Date(ev.selectedTime);
-	// 	this.event.startTime = selected.toISOString();
-	// 	selected.setHours(selected.getHours() + 1);
-	// 	this.event.endTime = selected.toISOString();
-	// }
+	showLoader() {
+		this.loaderToShow = this.loadingController
+			.create({
+				message: 'الرجاء الانتظار'
+			})
+			.then(res => {
+				res.present();
+
+				res.onDidDismiss().then(dis => {});
+			});
+	}
+
+	hideLoader() {
+		this.loadingController.dismiss();
+	}
 }

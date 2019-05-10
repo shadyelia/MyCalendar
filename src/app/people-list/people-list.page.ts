@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { AuthService } from '../../services/auth.service';
-import { NavController, MenuController, ModalController } from '@ionic/angular';
+import {
+	NavController,
+	MenuController,
+	ModalController,
+	LoadingController
+} from '@ionic/angular';
 import { PersonDetailsModalPage } from '../person-details-modal/person-details-modal.page';
 
 @Component({
@@ -11,15 +16,19 @@ import { PersonDetailsModalPage } from '../person-details-modal/person-details-m
 })
 export class PeopleListPage implements OnInit {
 	people = [];
+	loaderToShow: any;
+
 	constructor(
 		private db: AngularFireDatabase,
 		private auth: AuthService,
 		private navCtrl: NavController,
 		public modalController: ModalController,
-		public menu: MenuController
+		public menu: MenuController,
+		public loadingController: LoadingController
 	) {}
 
 	ngOnInit() {
+		this.showLoader();
 		this.db.database
 			.ref(`/People/` + this.auth.getUserId())
 			.once('value')
@@ -27,7 +36,7 @@ export class PeopleListPage implements OnInit {
 				snapShot.forEach(s => {
 					this.people.push({ key: s.key, value: s.val() });
 				});
-				console.log(this.people);
+				this.hideLoader();
 			});
 	}
 
@@ -56,5 +65,21 @@ export class PeopleListPage implements OnInit {
 
 	addPerson() {
 		this.navCtrl.navigateForward('add-person');
+	}
+
+	showLoader() {
+		this.loaderToShow = this.loadingController
+			.create({
+				message: 'الرجاء الانتظار'
+			})
+			.then(res => {
+				res.present();
+
+				res.onDidDismiss().then(dis => {});
+			});
+	}
+
+	hideLoader() {
+		this.loadingController.dismiss();
 	}
 }
